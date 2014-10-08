@@ -2,57 +2,53 @@
 
 import sys
 import random
-corpus = open("Meteorology.txt")
-corpus_dict = {}
-word_list =[]
 
-def make_chains(corpus):
+
+def make_chains():
     """Takes an input text as a string and returns a dictionary of
     markov chains."""
-    for line in corpus:
-        words = line.strip().split()
-        for i in range(len(words) -2):
-            if words[i] in corpus_dict: 
-                print corpus_dict[words[i]]
-                #append value to dict 
-                # corpus_dict[words[i]]         .append(words[i+1]) 
-                # corpus_dict.setdefault(words[i], []).append(words[i+1])
-            else: 
-                #make new key entry in dict
-                #append value to dict  
-                # corpus_dict[(words[i], words[i +1])] = words[i+2]   
-                pass
-            #((words[i], words[i +2]))
-    # print word_list        
+    corpus = open("Meteorology.txt")
+    corpus_dict = {}
+    read_file = corpus.read()
+    split_file = read_file.split()
+    for i in range(len(split_file) -2):
+        if (split_file[i], split_file[i + 1]) in corpus_dict: 
+            value = corpus_dict[(split_file[i], split_file[i+1])] # = [words[i+1]]
+            value.append(split_file[i +2])
+            corpus_dict[(split_file[i], split_file[i + 1])] = value
 
-    # for bigram_tuple in range(len(word_list) -1): 
-    #     corpus_dict[(word_list[bigram_tuple])] = [word_list[bigram_tuple + 1][1]] 
-    print corpus_dict  
 
-# def make_text(chains):
-#     """Takes a dictionary of markov chains and returns random text
-#     based off an original text."""
-#     #return "Here's some random text."
-#     #generate a random starting point
-#     while True: 
-#         #read through the list of keys
-#         if  
+        else: 
+            #make new key, value entry in dict
+            corpus_dict[(split_file[i], split_file[i +1])] = [split_file[i+2]]
+    return corpus_dict
 
-#         for num in range(1, 10): 
-#             my_list =[]
-#             #creates a list of keys so that we can manipulate the index
-#             for k in corpus_dict.keys():
-#                 my_list.append(k)
 
-#             random_integer = 
-            
-#             print my_list[random.randint[num]]
-    # for k in range(len(corpus_dict) -1):
+def make_text(chains):
+# #     """Takes a dictionary of markov chains and returns random text
+# #     based off an original text."""
+# #     #return "Here's some random text."
+# #     #generate a random starting point
+    key_list =[]
+        #creates a list of keys so that we can manipulate the index
+    for k in chains.keys():
+        key_list.append(k)
+    # print key_list
 
-        #can't use random.seed because it's output is a number
-        #print random.seed([corpus_dict[k]])
+    starting_point = random.choice(key_list)
+    count = 0 
+    while count < 10:
+        key = starting_point
+        # print "key", key
+        chain_one = random.choice(chains[key])
+        # print "value", chain_one
+        #find this tuple
+        if chains[(key[1], chain_one)] in chains:
+            #new_chain returns a random value from this tuple
+            new_chain = random.choice(chains[(key[1], chain_one)])
+            print new_chain
+        count += 1
 
-    #save our output to a list or something....
 
 def main():
 #     args = sys.argv
@@ -60,8 +56,8 @@ def main():
 #   Change this to read input_text from a file
 #   input_text = "Some text"
 
-    chain_dict = make_chains(corpus)
-#    random_text = make_text(chain_dict)
+    chain_dict = make_chains()
+    random_text = make_text(chain_dict)
 #   print random_text
 
 if __name__ == "__main__":
