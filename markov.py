@@ -27,16 +27,17 @@ def make_chains():
 def make_text(chains):
 # #     """Takes a dictionary of markov chains and returns random text
 # #     based off an original text."""
-# #     #return "Here's some random text."
-# #     #generate a random starting point
+    
+    #creates a list of keys for starting point
     key_list =[]
-        #creates a list of keys so that we can manipulate the index
     for k in chains.keys():
         key_list.append(k)
-    # print key_list
-    starting_point = random.choice(key_list)
-    # count = 0
+
+    #eventual string structure for markov sentence
     markov_output_string = ""
+
+    #create a starting key tuple
+    starting_point = random.choice(key_list)
     markov_output_string += starting_point[0] + " " + starting_point[1] + " "
     key = starting_point
     # print "key=", key
@@ -52,8 +53,9 @@ def make_text(chains):
             # next_tuple = (key[1], chain_one)
             next_value = random.choice(chains[next_tuple])
             markov_output_string += next_value + " "
-            print markov_output_string
+            # print markov_out put_string
             next_tuple = (next_tuple[1], next_value)
+        if #make this statement stop script by checking for punct
         else:
             print "tuple wasn't found", markov_output_string
             return# or break 
@@ -67,6 +69,7 @@ def make_text(chains):
         #     new_chain = random.choice(chains[(key[1], chain_one)])
         #     print new_chain
         # count += 1
+    print markov_output_string
 
 
 
